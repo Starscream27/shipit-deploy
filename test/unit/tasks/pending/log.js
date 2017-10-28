@@ -33,12 +33,12 @@ describe('pending:log task', function () {
     shipit.remote.restore();
   });
 
-  describe('#getPendingCommits', function () {
+  describe('#getCurrentRevision', function () {
     describe('no current release', function () {
       it('should return null', function (done) {
         shipit.start('pending:log', function (err) {
           if (err) return done(err);
-          shipit.getPendingCommits()
+          shipit.getCurrentRevision()
           .then(function(commitStr) {
             expect(commitStr).to.equal(null);
             done();

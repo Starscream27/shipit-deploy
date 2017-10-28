@@ -1,21 +1,17 @@
 # shipit-deploy
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/shipitjs/shipit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-[![Build Status](https://travis-ci.org/shipitjs/shipit-deploy.svg?branch=master)](https://travis-ci.org/shipitjs/shipit-deploy)
-[![Dependency Status](https://david-dm.org/shipitjs/shipit-deploy.svg?theme=shields.io)](https://david-dm.org/shipitjs/shipit-deploy)
-[![devDependency Status](https://david-dm.org/shipitjs/shipit-deploy/dev-status.svg?theme=shields.io)](https://david-dm.org/shipitjs/shipit-deploy#info=devDependencies)
-
-Set of deployment tasks for [Shipit](https://github.com/shipitjs/shipit) based on git and rsync commands.
+Set of deployment tasks for [Shipit](https://github.com/shipitjs/shipit) based on rsync.
 
 **Features:**
 
-- Deploy tag, branch or commit
+- Deploy folder to a remote
 - Add additional behaviour using hooks
 - Build your project locally or remotely
 - Easy rollback
 
 ## Install
+
+TODO
 
 ```
 npm install shipit-deploy
@@ -35,12 +31,10 @@ module.exports = function (shipit) {
     default: {
       workspace: '/tmp/github-monitor',
       deployTo: '/tmp/deploy_to',
-      repositoryUrl: 'https://github.com/user/repo.git',
-      ignores: ['.git', 'node_modules'],
       keepReleases: 2,
       deleteOnRollback: false,
-      key: '/path/to/key',
-      shallowClone: true
+      shallowClone: true,
+      revision: '2.0'
     },
     staging: {
       servers: 'user@myserver.com'
@@ -69,6 +63,12 @@ Type: `String`
 
 Define a path to an empty directory where Shipit builds it's syncing source. **Beware to not set this path to the root of your repository as shipit-deploy cleans the directory at the given path as a first step.**
 
+### revision
+
+Type: `String`
+
+Revision number that will be written to a REVISION file in each release.
+
 ### dirToCopy
 
 Type: `String`
@@ -82,35 +82,11 @@ Type: `String`
 
 Define the remote path where the project will be deployed. A directory `releases` is automatically created. A symlink `current` is linked to the current release.
 
-### repositoryUrl
-
-Type: `String`
-
-Git URL of the project repository.
-
-### branch
-
-Type: `String`
-
-Tag, branch or commit to deploy.
-
-### ignores
-
-Type: `Array<String>`
-
-An array of paths that match ignored files. These paths are used in the rsync command.
-
 ### deleteOnRollback
 
 Type: `Boolean`
 
 Whether or not to delete the old release when rolling back to a previous release.
-
-### key
-
-Type: `String`
-
-Path to SSH key
 
 ### keepReleases
 
@@ -123,24 +99,6 @@ Number of releases to keep on the remote server.
 Type: `Boolean`
 
 Perform a shallow clone. Default: `false`.
-
-### updateSubmodules
-
-Type: Boolean
-
-Update submodules. Default: `false`.
-
-### gitConfig
-
-type: `Object`
-
-Custom git configuration settings for the cloned repo.
-
-### gitLogFormat
-
-Type: `String`
-
-Log format to pass to [`git log`](http://git-scm.com/docs/git-log#_pretty_formats). Used to display revision diffs in `pending` task. Default: `%h: %s - %an`.
 
 ### rsyncFrom
 
@@ -162,12 +120,6 @@ Several variables are attached during the deploy and the rollback process:
 ### shipit.config.*
 
 All options described in the config sections are available in the `shipit.config` object.
-
-### shipit.repository
-
-Attached during `deploy:fetch` task.
-
-You can manipulate the repository using git command, the API is describe in [gift](https://github.com/sentientwaffle/gift).
 
 ### shipit.releaseDirname
 
@@ -198,14 +150,6 @@ The current symlink path : `path.join(shipit.config.deployTo, 'current')`.
 - deploy
   - deploy:init
     - Emit event "deploy".
-  - deploy:fetch
-    - Create workspace.
-    - Initialize repository.
-    - Add remote.
-    - Fetch repository.
-    - Checkout commit-ish.
-    - Merge remote branch in local branch.
-    - Emit event "fetched".
   - deploy:update
     - Create and define release path.
     - Remote copy project.
@@ -232,13 +176,12 @@ The current symlink path : `path.join(shipit.config.deployTo, 'current')`.
     - Emit event "rollbacked".
 - pending
   - pending:log
-    - Log pending commits (diff between HEAD and currently deployed revision) to console.
+    - Log current revision to console
 
 ## Dependencies
 
 ### Local
 
-- git 1.7.8+
 - rsync 3+
 - OpenSSH 5+
 

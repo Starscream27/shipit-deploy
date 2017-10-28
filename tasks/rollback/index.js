@@ -9,7 +9,7 @@ var utils = require('shipit-utils');
 
 module.exports = function (gruntOrShipit) {
   require('./init')(gruntOrShipit);
-  require('../deploy/fetch')(gruntOrShipit);
+  require('../deploy/publish')(gruntOrShipit);
   require('../deploy/clean')(gruntOrShipit);
   require('./finish')(gruntOrShipit);
 

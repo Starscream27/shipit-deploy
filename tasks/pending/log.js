@@ -13,7 +13,7 @@ module.exports = function (gruntOrShipit) {
 
   function task() {
     var shipit = init(utils.getShipit(gruntOrShipit));
-    return shipit.getPendingCommits()
+    return shipit.getCurrentRevision()
     .then(function(commits) {
       var msg = chalk.green('\nNo pending commits.');
 

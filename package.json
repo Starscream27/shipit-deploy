@@ -1,7 +1,7 @@
 {
-  "name": "shipit-deploy",
+  "name": "shipit-deploy-rsync",
   "version": "2.5.1",
-  "description": "Set of deployment tasks for Shipit based on git and rsync commands. ",
+  "description": "Set of deployment tasks for Shipit based on rsync. ",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -16,19 +16,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/shipitjs/shipit-deploy.git"
+    "url": "https://github.com/Starscream27/shipit-deploy.git"
   },
   "keywords": [
     "shipit",
     "deploy",
-    "task"
+    "task",
+    "rsync"
   ],
-  "author": "Greg Bergé <berge.greg@gmail.com>",
+  "author": "Mathieu Meylan <mat.meylan@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/shipitjs/shipit-deploy/issues"
+    "url": "https://github.com/Starscream27/shipit-deploy/issues"
   },
-  "homepage": "https://github.com/shipitjs/shipit-deploy",
+  "homepage": "https://github.com/Starscream27/shipit-deploy",
   "devDependencies": {
     "chai": "^3.4.1",
     "mocha": "^2.1.0",
