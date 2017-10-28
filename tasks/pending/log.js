@@ -14,11 +14,11 @@ module.exports = function (gruntOrShipit) {
   function task() {
     var shipit = init(utils.getShipit(gruntOrShipit));
     return shipit.getCurrentRevision()
-    .then(function(commits) {
-      var msg = chalk.green('\nNo pending commits.');
+    .then(function(rev) {
+      var msg = chalk.green('\nNo current revision.');
 
-      if (commits) {
-        msg = chalk.yellow(chalk.underline('\nPending commits:\n') + commits);
+      if (rev) {
+        msg = chalk.yellow(chalk.underline('\nCurrent Revision:\n') + rev);
       }
 
       shipit.log(msg);

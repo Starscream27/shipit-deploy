@@ -39,8 +39,8 @@ describe('pending:log task', function () {
         shipit.start('pending:log', function (err) {
           if (err) return done(err);
           shipit.getCurrentRevision()
-          .then(function(commitStr) {
-            expect(commitStr).to.equal(null);
+          .then(function(rev) {
+            expect(rev).to.equal(null);
             done();
           });
         });
