@@ -1,4 +1,4 @@
-# shipit-deploy
+# shipit-deploy-rsync
 
 Set of deployment tasks for [Shipit](https://github.com/shipitjs/shipit) based on rsync.
 
